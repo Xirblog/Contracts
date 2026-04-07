@@ -1,13 +1,26 @@
 syntax = "proto3";
 
+import "google/protobuf/timestamp.proto";
+
 option csharp_namespace = "PostService.Presentation.Grpc.Protos";
 
 package posts;
 
 service PostService {
   rpc CreatePost (CreatePostRequest) returns (CreatePostResponse);
+  rpc QueryPosts (QueryPostsRequest) returns (QueryPostsResponse);
   rpc UpdatePost (UpdatePostRequest) returns (UpdatePostResponse);
   rpc DeletePost (DeletePostRequest) returns (DeletePostResponse);
+}
+
+message Post {
+  string post_id = 1;
+  string name = 2;
+  string description = 3;
+  string markdown_content = 4;
+  string author_id = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
 }
 
 message CreatePostRequest {
@@ -40,3 +53,18 @@ message DeletePostResponse {
   bool success = 1;
 }
 
+message QueryPostsRequest {
+  repeated string post_ids = 1;
+  optional string name_substring = 2;
+  optional string description_substring = 3;
+  optional string markdown_content_substring = 4;
+  repeated string author_ids = 5;
+  optional google.protobuf.Timestamp created_before = 6;
+  optional google.protobuf.Timestamp created_after = 7;
+  optional google.protobuf.Timestamp updated_before = 8;
+  optional google.protobuf.Timestamp updated_after = 9;
+}
+
+message QueryPostsResponse {
+  repeated Post posts = 1;
+}
