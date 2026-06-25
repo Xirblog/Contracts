@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+option go_package = "blogreactionservice/protos/reactions;reactions";
+
+package reactions;
+
+service ReactionService {
+  rpc AddReaction (AddReactionRequest) returns (AddReactionResponse);
+  rpc DeleteReaction (DeleteReactionRequest) returns (DeleteReactionResponse);
+  rpc GetReactionsCount (GetReactionsCountRequest) returns (GetReactionsCountResponse);
+}
+
+enum ReactionType {
+  REACTION_TYPE_UNSPECIFIED = 0;
+  REACTION_TYPE_LIKE = 1;
+  REACTION_TYPE_DISLIKE = 2;
+  REACTION_TYPE_HEART = 3;
+  REACTION_TYPE_FIRE = 4;
+  REACTION_TYPE_POOP = 5;
+}
+
+message AddReactionRequest {
+  string post_id = 1;
+  string user_id = 2;
+  ReactionType reaction_type = 3;
+}
+
+message AddReactionResponse {
+  bool success = 1;
+}
+
+message DeleteReactionRequest {
+  string post_id = 1;
+  string user_id = 2;
+  ReactionType reaction_type = 3;
+}
+
+message DeleteReactionResponse {
+  bool success = 1;
+}
+
+message GetReactionsCountRequest {
+  string post_id = 1;
+  ReactionType reaction_type = 2;
+}
+
+message GetReactionsCountResponse {
+  uint64 count = 1;
+}

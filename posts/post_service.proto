@@ -3,6 +3,7 @@ syntax = "proto3";
 import "google/protobuf/timestamp.proto";
 
 option csharp_namespace = "PostService.Presentation.Grpc.Protos";
+option go_package = "blogreactionservice/protos/posts;posts";
 
 package posts;
 
